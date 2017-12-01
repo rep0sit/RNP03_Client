@@ -13,6 +13,19 @@ public final class Commands {
 //	private static final String RESPONSE = ">>"; // information from server
 //	private static final String FORCE = ">>>>"; // server forces alteration of client
 	
+	//#######NEUE SERVERBEFEHLE########################
+	public static final String SERVER_PREFIX = "SERVER";
+	//Server grüßt nach dem Verbindungsaufbau: SERVER GREETINGS <message>
+	public static final String SERVER_GREETINGS = SERVER_PREFIX + "GREETINGS";
+	//Server sendet eine im Chatraum geschriebene Nachricht: SERVER SEND <date user message>
+	public static final String SERVER_SEND = SERVER_PREFIX + "SEND";
+	//Server löscht chatraum: SERVER DELETE <chatroomname>
+	public static final String SERVER_DELETE = SERVER_PREFIX + "DELETE";
+	//Server informiert den CLient, dass er die Verbindung beendet
+	public static final String QUIT = "QUIT";
+	
+	//#################################################
+	
 	private static final String SERVER_COMMAND_PREFIX = ">>>>";
 	//#################################################
 
@@ -93,7 +106,7 @@ public final class Commands {
 	/**
 	 * quit the chat session and terminates all streams and socket connection
 	 */
-	public static final String QUIT = "/quit";
+//	public static final String QUIT = "/quit";
 	
 	// ADDITIONAL SERVER ADMIN BEFEHLE
 	
