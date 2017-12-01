@@ -14,6 +14,7 @@ public final class Commands {
 //	private static final String FORCE = ">>>>"; // server forces alteration of client
 	
 	//#######NEUE SERVERBEFEHLE########################
+	//####FROM SERVER TO CLIENT########################
 	public static final String SERVER_PREFIX = "SERVER";
 	//Server grüßt nach dem Verbindungsaufbau: SERVER GREETINGS <message>
 	public static final String SERVER_GREETINGS = SERVER_PREFIX + "GREETINGS";
@@ -21,9 +22,31 @@ public final class Commands {
 	public static final String SERVER_SEND = SERVER_PREFIX + "SEND";
 	//Server löscht chatraum: SERVER DELETE <chatroomname>
 	public static final String SERVER_DELETE = SERVER_PREFIX + "DELETE";
-	//Server informiert den CLient, dass er die Verbindung beendet
+	//Server informiert den CLient, dass er die Verbindung beendet: <timecode> QUIT <message>
 	public static final String QUIT = "QUIT";
 	
+	
+	//####POSITIVE RÜCKMELDUNG VOM SERVER##############
+	//Antwort vom Server an Client bei erfolgreicher Anmeldung des CLients: <timecode> LOGIN SUCCESS <message>
+	public static final String LOGIN_SUCCESS = "LOGIN SUCCESS";
+	//Antwort vom Server an Client bei Anfrage,w as es für Chatraeume gibt: 
+	//<timecode> LIST START "\n" LIST KAtzenSindHUnde "\n" LIST..... "\n" LIST END
+	public static final String LIST_START = "LIST START";
+	public static final String LIST_END = "LIST END";
+	//Antwort vom Server bei erfolgreichem Chatroom-Wechsel: <timecode> JOIN SUCCESS
+	public static final String JOIN_SUCCESS = "JOIN SUCCESS";
+	
+	//######NEGATIVE RÜCKMELDUNG VOM SERVER############
+	
+	//######FROM CLIENT USER TO SERVER (START WITH "/")######
+	//Client logt sich mit Benutzernamen ein: <timecode> LOGIN <username>
+	public static final String LOGIN = "LOGIN";
+	//Client fragt an, welche Chatraueme es gibt: <timecode> LIST
+	public static final String LIST = "LIST";
+	//Client waehlt Chatraum aus: <timecode> JOIN <chatroomname>
+	public static final String JOIN = "JOIN";
+	//Client schreibt eine Nachricht in den Chatraum: <timecode> SEND <message>
+	public static final String SEND = "SEND";
 	//#################################################
 	
 	private static final String SERVER_COMMAND_PREFIX = ">>>>";

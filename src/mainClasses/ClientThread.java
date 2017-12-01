@@ -152,8 +152,8 @@ public final class ClientThread extends AbstractClientServerThread {
 //				
 				
 				
-				if(lineAry[0].equals("SERVER")) {
-					if(lineAry[1].equals("GREETINGS")) {
+				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {
+					if(lineAry[1].equals(Commands.SERVER_GREETINGS)) {
 						selfMessage(buildMessage(3, lineAry));
 						write(stringTimeCode + " LOGIN " + name);
 						currentTimeCode = stringTimeCode;
