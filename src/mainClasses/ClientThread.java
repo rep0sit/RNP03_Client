@@ -135,8 +135,55 @@ public final class ClientThread extends AbstractClientServerThread {
 		String currentLine;
 		boolean invalidName = false;
 		System.out.println("ClientThread is running now.");
+		
+		String currentTimeCode = "";
+		
 		try {
 			while (!closed && (currentLine = br.readLine()) != null) {
+				//neue server commands
+				//timecode
+				long timeCode = System.currentTimeMillis();
+				String stringTimeCode = Long.toString(timeCode);
+				
+				String [] lineAry = currentLine.split(" ");
+				int lineAryLen = lineAry.length;
+				
+				// server commands
+//				
+				
+				
+				if(lineAry[0].equals("SERVER")) {
+					if(lineAry[1].equals("GREETINGS")) {
+						selfMessage(buildMessage(3, lineAry));
+						write(stringTimeCode + " LOGIN " + name);
+						currentTimeCode = stringTimeCode;
+					}
+					else if(lineAry[1].equals("SEND")) {
+						selfMessage(buildMessage(3, lineAry));
+					}
+					else if(lineAry[1].equals("DELETE")) {
+						selfMessage("Der Raum " + buildMessage(3, lineAry) + " wurde geschlossen.");
+					}
+				}
+				else if(lineAry[0].equals("QUIT")) {
+					selfMessage(buildMessage(2, lineAry) +"(You were kicked from Server!)");
+				}	
+				else if(lineAry[0].matches("[0-9]+")) {
+					if(lineAry[1].equals("LOGIN")) {
+						
+						if(lineAry[2].equals("SUCCESS")){
+							selfMessage(buildMessage(4, lineAry) + "(Login war erfolgreich.)");
+						}else {
+							selfMessage("(Login war nicht erfolgreich.)");
+						}
+					}
+					else if(lineAry[1].equals("USERS")) {
+						if(lineAry[2].equals("START")) {
+							
+						}
+					}
+				}
+				
 				// server commands
 				if (currentLine.equals(Commands.GIVE_USERNAME)) {
 					write(name);
@@ -196,6 +243,21 @@ public final class ClientThread extends AbstractClientServerThread {
 		}
 	}
 	
+	private String buildMessage(int minLen, String[] ary) {
+		StringBuilder sb = new StringBuilder();
+			
+			
+			
+		if(ary.length >= minLen) {
+			for(int i = minLen - 1; i < ary.length; i++) {
+				sb.append(ary[i]).append(" ");
+			}
+		}
+			
+			
+		return sb.toString();
+	}
+
 	public static void main(String...args) throws IOException {
 		if(args.length != 3) {
 			System.out.println("3 arguments needed! <username>, <server ip> and <server port>.");
