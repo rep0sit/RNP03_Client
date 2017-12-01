@@ -14,7 +14,7 @@ public final class Commands {
 //	private static final String FORCE = ">>>>"; // server forces alteration of client
 	
 	//#######NEUE SERVERBEFEHLE########################
-	//####FROM SERVER TO CLIENT########################
+	//FROM SERVER TO CLIENT
 	public static final String SERVER_PREFIX = "SERVER";
 	//Server grüßt nach dem Verbindungsaufbau: SERVER GREETINGS <message>
 	public static final String SERVER_GREETINGS = SERVER_PREFIX + "GREETINGS";
@@ -22,11 +22,11 @@ public final class Commands {
 	public static final String SERVER_SEND = SERVER_PREFIX + "SEND";
 	//Server löscht chatraum: SERVER DELETE <chatroomname>
 	public static final String SERVER_DELETE = SERVER_PREFIX + "DELETE";
-	//Server informiert den CLient, dass er die Verbindung beendet: <timecode> QUIT <message>
+	//Server informiert den CLient, dass er die Verbindung beendet: QUIT <message>
 	public static final String QUIT = "QUIT";
 	
 	
-	//####POSITIVE RÜCKMELDUNG VOM SERVER##############
+	//POSITIVE RÜCKMELDUNG VOM SERVER  <timecode> BEFEHL...
 	//Antwort vom Server an Client bei erfolgreicher Anmeldung des CLients: <timecode> LOGIN SUCCESS <message>
 	public static final String LOGIN_SUCCESS = "LOGIN SUCCESS";
 	//Antwort vom Server an Client bei Anfrage,w as es für Chatraeume gibt: 
@@ -35,8 +35,20 @@ public final class Commands {
 	public static final String LIST_END = "LIST END";
 	//Antwort vom Server bei erfolgreichem Chatroom-Wechsel: <timecode> JOIN SUCCESS
 	public static final String JOIN_SUCCESS = "JOIN SUCCESS";
+	//ANtwort des Servers auf USERS-Anfrage vom Client: <timecode> USERS START...<timecode> USERS <username>...<timecode>USERS END
+	public static final String USERS_START = "USERS START";
+	public static final String USERS_END = "USERS END";
+	//erfolgreiche Neuerstellung eines Raumes
+	public static final String CREATE_SUCCESS = "CREATE SUCCESS";
+	//erfolgreiches Verlassen des Raumes
+	public static final String LEAVE_SUCCESS = "LEAVE SUCCESS";
 	
-	//######NEGATIVE RÜCKMELDUNG VOM SERVER############
+	//NEGATIVE RÜCKMELDUNG VOM SERVER: <timecode> BEFEHL...
+	//Client-Login war nciht erfolgreich: <timecode> LOGIN FAIL
+	public static final String LOGIN_FAIL = "LOGIN FAIL";
+	public static final String CREATE_FAIL = "CREATE FAIL";
+	public static final String JOIN_FAIL = "JOIN_FAIL";
+	public static final String LEAVE_FAIL = "LEAVE_FAIL";
 	
 	//######FROM CLIENT USER TO SERVER (START WITH "/")######
 	//Client logt sich mit Benutzernamen ein: <timecode> LOGIN <username>
@@ -47,6 +59,22 @@ public final class Commands {
 	public static final String JOIN = "JOIN";
 	//Client schreibt eine Nachricht in den Chatraum: <timecode> SEND <message>
 	public static final String SEND = "SEND";
+	
+	//Client will den Chatroom verlassen: <timecode> LEAVE
+	public static final String LEAVE = "LEAVE";
+	
+	//Client fordert vom Server möglichst alle Nachrichten an, die jüngger sind als timecodeVonNachricht
+	//<timecode> GET timecodeVonNachricht -> SErver antwortet mit "SERVER SEND oldestMsg.....SERVER SEND newestMsg
+	public static final String GET = "GET";
+	
+	//QUIT USER??! <timecode> QUIT
+	
+	//Client fragt an, welche User sich im selben Raum befinden: <timecode> USERS
+	public static final String USERS = "USERS";
+	//Client versucht, CHatraum zu erstellen (nur wenn es diesen ncoh nicht gibt):
+	//<timecode> CREATE <chatroomname>
+	public static final String CREATE_ROOM = "CREATE";
+	
 	//#################################################
 	
 	private static final String SERVER_COMMAND_PREFIX = ">>>>";
@@ -115,7 +143,7 @@ public final class Commands {
 	 * give a list of all active users
 	 * this is also a Server Admin Command
 	 */
-	public static final String USERS = "/users";
+//	public static final String USERS = "/users";
 	/**
 	 * give a list of all active rooms
 	 */
