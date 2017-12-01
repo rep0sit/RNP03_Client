@@ -17,11 +17,12 @@ public final class Commands {
 	//FROM SERVER TO CLIENT
 	public static final String SERVER_PREFIX = "SERVER";
 	//Server grüßt nach dem Verbindungsaufbau: SERVER GREETINGS <message>
-	public static final String SERVER_GREETINGS = SERVER_PREFIX + "GREETINGS";
+	public static final String GREETINGS = "GREETINGS";
 	//Server sendet eine im Chatraum geschriebene Nachricht: SERVER SEND <date user message>
 	public static final String SERVER_SEND = SERVER_PREFIX + "SEND";
 	//Server löscht chatraum: SERVER DELETE <chatroomname>
-	public static final String SERVER_DELETE = SERVER_PREFIX + "DELETE";
+//	public static final String SERVER_DELETE = SERVER_PREFIX + "DELETE";
+	public static final String DELETE = "DELETE";
 	//Server informiert den CLient, dass er die Verbindung beendet: QUIT <message>
 	public static final String QUIT = "QUIT";
 	
@@ -38,6 +39,8 @@ public final class Commands {
 	//ANtwort des Servers auf USERS-Anfrage vom Client: <timecode> USERS START...<timecode> USERS <username>...<timecode>USERS END
 	public static final String USERS_START = "USERS START";
 	public static final String USERS_END = "USERS END";
+	//erfolgreicheCLient Aktion
+	public static final String SUCCESS = "SUCCESS";
 	//erfolgreiche Neuerstellung eines Raumes
 	public static final String CREATE_SUCCESS = "CREATE SUCCESS";
 	//erfolgreiches Verlassen des Raumes

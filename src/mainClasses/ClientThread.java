@@ -153,31 +153,34 @@ public final class ClientThread extends AbstractClientServerThread {
 				
 				
 				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {
-					if(lineAry[1].equals(Commands.SERVER_GREETINGS)) {
+					if(lineAry[1].equals(Commands.GREETINGS)) {
 						selfMessage(buildMessage(3, lineAry));
-						write(stringTimeCode + " LOGIN " + name);
+						write(stringTimeCode +" "+ Commands.LOGIN + " "+name);
 						currentTimeCode = stringTimeCode;
 					}
-					else if(lineAry[1].equals("SEND")) {
+					else if(lineAry[1].equals(Commands.SEND)) {
 						selfMessage(buildMessage(3, lineAry));
 					}
-					else if(lineAry[1].equals("DELETE")) {
+					else if(lineAry[1].equals(Commands.DELETE)) {
 						selfMessage("Der Raum " + buildMessage(3, lineAry) + " wurde geschlossen.");
 					}
 				}
-				else if(lineAry[0].equals("QUIT")) {
+				else if(lineAry[0].equals(Commands.QUIT)) {
 					selfMessage(buildMessage(2, lineAry) +"(You were kicked from Server!)");
+					close();
+					gui.dispose();
+					break;
 				}	
 				else if(lineAry[0].matches("[0-9]+")) {
-					if(lineAry[1].equals("LOGIN")) {
+					if(lineAry[1].equals(Commands.LOGIN)) {
 						
-						if(lineAry[2].equals("SUCCESS")){
+						if(lineAry[2].equals(Commands.SUCCESS)){
 							selfMessage(buildMessage(4, lineAry) + "(Login war erfolgreich.)");
 						}else {
 							selfMessage("(Login war nicht erfolgreich.)");
 						}
 					}
-					else if(lineAry[1].equals("USERS")) {
+					else if(lineAry[1].equals(Commands.USERS)) {
 						if(lineAry[2].equals("START")) {
 							
 						}
