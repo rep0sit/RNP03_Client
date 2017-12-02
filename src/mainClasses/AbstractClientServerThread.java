@@ -1,6 +1,7 @@
 package mainClasses;
 
 import java.io.IOException;
+import java.util.Date;
 
 import utils.Commands;
 
@@ -31,7 +32,9 @@ abstract class AbstractClientServerThread extends AbstractWriteThread {
 		closed = true;
 		
 		try {
-			write(Commands.QUIT);
+			Date date = new Date();
+			long timecode = date.getTime();
+			write(timecode + " "+Commands.QUIT);
 			br.close();
 			pw.close();
 		} catch (IOException e) {

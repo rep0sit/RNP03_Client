@@ -7,7 +7,7 @@ public final class Constants {
 	public static final int TIMEOUT_10SEC = 10000;
 	public static final int TIMEOUT_5SEC = 5000;
 	
-	public static final int SERVER_STANDARD_PORT = 9000;
+	public static final int SERVER_STANDARD_PORT = 10896; //9000;
 	
 	public static final int MAX_CLIENT_THREADS = 50;
 	

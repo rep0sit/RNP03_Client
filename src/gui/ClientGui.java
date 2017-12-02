@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -63,6 +64,7 @@ public ClientGui(String name, String address, int port) {
 		console("Attempting a connection with " + address + ":" + port + ", user: " + name + " ...");
 		
 		client = new ClientThread(name, address, port);
+				
 		client.setGui(this);
 		client.start();
 	}
@@ -190,9 +192,9 @@ public ClientGui(String name, String address, int port) {
 		String message = txtMessage.getText();
 		
 		if(!message.equals("")){
-			//console(name + ": " + txtMessage.getText());
-			
-			client.write(message);
+			console(client.getUserName() + ": " + txtMessage.getText());
+			client.msgFromClient(message);
+//			client.write(timecodeMsg);
 			
 			txtMessage.setText("");
 			txtMessage.requestFocusInWindow();

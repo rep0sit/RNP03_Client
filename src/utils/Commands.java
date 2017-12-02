@@ -18,6 +18,7 @@ public final class Commands {
 	public static final String SERVER_PREFIX = "SERVER";
 	//Server grüßt nach dem Verbindungsaufbau: SERVER GREETINGS <message>
 	public static final String GREETINGS = "GREETINGS";
+	public static final String SERVER_GREETINGS = SERVER_PREFIX + " "+GREETINGS;
 	//Server sendet eine im Chatraum geschriebene Nachricht: SERVER SEND <date user message>
 	public static final String SERVER_SEND = SERVER_PREFIX + "SEND";
 	//Server löscht chatraum: SERVER DELETE <chatroomname>
@@ -55,7 +56,7 @@ public final class Commands {
 	
 	//######FROM CLIENT USER TO SERVER (START WITH "/")######
 	//Client logt sich mit Benutzernamen ein: <timecode> LOGIN <username>
-	public static final String LOGIN = "LOGIN";
+	public static final String LOGIN = " LOGIN ";
 	//Client fragt an, welche Chatraueme es gibt: <timecode> LIST
 	public static final String LIST = "LIST";
 	//Client waehlt Chatraum aus: <timecode> JOIN <chatroomname>

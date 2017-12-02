@@ -1,6 +1,3 @@
-/**
- * 
- */
 package mainClasses;
 
 import java.io.BufferedReader;
@@ -12,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 import gui.ClientGui;
 import utils.Commands;
@@ -59,6 +57,10 @@ public final class ClientThread extends AbstractClientServerThread {
 			
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			pw = new PrintWriter(socket.getOutputStream());
+			
+			Date date = new Date();
+			long timecode = date.getTime();
+			write(timecode+" LOGIN "+name);
 		} 
 		catch (SocketTimeoutException e) {
 
@@ -73,6 +75,22 @@ public final class ClientThread extends AbstractClientServerThread {
 
 		
 		selfMessage("ClientThread initialized.");
+//		String[] cmdAry;
+//		try {
+//			cmdAry = br.readLine().split(" ");
+//			String cmdAryCmd = cmdAry[0]+cmdAry[1];
+//			
+//			System.out.println("GREETINGS: "+cmdAryCmd);
+//			
+//			if(cmdAryCmd.equals(Commands.SERVER_GREETINGS)){
+//				Date date = new Date();
+//				long timecode = date.getTime();
+//				write(timecode+" LOGIN "+name);
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	
@@ -142,23 +160,28 @@ public final class ClientThread extends AbstractClientServerThread {
 			while (!closed && (currentLine = br.readLine()) != null) {
 				//neue server commands
 				//timecode
-				long timeCode = System.currentTimeMillis();
-				String stringTimeCode = Long.toString(timeCode);
+				//long timeCode = System.currentTimeMillis();
+				Date date = new Date();
+				long timecode = date.getTime();
+//				String stringTimeCode = String.valueOf(timecode);
+//				long timecode = Long.parseLong(date.toString());
+				String stringTimeCode = String.valueOf(timecode);
 				
 				String [] lineAry = currentLine.split(" ");
 				int lineAryLen = lineAry.length;
 				
 				// server commands
-//				
-				
-				
 				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {
-					if(lineAry[1].equals(Commands.GREETINGS)) {
-						selfMessage(buildMessage(3, lineAry));
-						write(stringTimeCode +" "+ Commands.LOGIN + " "+name);
-						currentTimeCode = stringTimeCode;
-					}
-					else if(lineAry[1].equals(Commands.SEND)) {
+
+					System.out.println("stringTimecode "+stringTimeCode);
+					
+//					if(lineAry[1].equals(Commands.GREETINGS)) {
+//						selfMessage(buildMessage(3, lineAry));
+//						write(timecode + Commands.LOGIN + name);
+//						currentTimeCode = stringTimeCode;
+//					}
+//					else 
+					if(lineAry[1].equals(Commands.SEND)) {
 						selfMessage(buildMessage(3, lineAry));
 					}
 					else if(lineAry[1].equals(Commands.DELETE)) {
@@ -181,61 +204,63 @@ public final class ClientThread extends AbstractClientServerThread {
 						}
 					}
 					else if(lineAry[1].equals(Commands.USERS)) {
-						if(lineAry[2].equals("START")) {
-							
-						}
+						selfMessage("Hier sind die Users: "+currentLine);
+					}else if(lineAry[1].equals(Commands.LIST)){
+						selfMessage("Liste der Raeume: "+currentLine);
+					}else if(lineAry[1].equals(Commands.GET)){
+						selfMessage("Nachrichten: "+currentLine);
 					}
 				}
 				
-				// server commands
-				if (currentLine.equals(Commands.GIVE_USERNAME)) {
-					write(name);
-				}
-				else if(currentLine.startsWith(Commands.FORCE_DISCONNECT)) {
-					//selfMessage("You were kicked from server.");
-					selfMessageResponse(Commands.FORCE_DISCONNECT, "kicked from server", currentLine);
-					close();
-					gui.dispose();
-					break;
-				}
-
-				// negative server responses
-				else if (currentLine.startsWith(Commands.USERNAME_TAKEN)) {
-					selfMessageResponse(Commands.USERNAME_TAKEN, "username already taken", currentLine);
-					invalidName = true;
-				} 
-				else if (currentLine.startsWith(Commands.INVALID_USERNAME)) {
-					selfMessageResponse(Commands.INVALID_USERNAME, "invalid username", currentLine);
-					invalidName = true;
-				} 
-				else if (currentLine.startsWith(Commands.SERVER_FULL)) {
-					selfMessageResponse(Commands.SERVER_FULL, "server already full", currentLine);
-					close();
-					gui.dispose();
-					break;
-				}
-
-				// positive server responses
-				else if (currentLine.startsWith(Commands.LOGGED_IN)) {
-					//loggedIn = true;
-					selfMessageResponse(Commands.LOGGED_IN, "you are logged in now", currentLine);
-				}
-
-				else if (currentLine.startsWith(Commands.VALID_USERNAME)) {
-					selfMessageResponse(Commands.VALID_USERNAME,"username was valid", currentLine);
-					invalidName = false;
-				} 
-				else if (currentLine.startsWith(Commands.IN_ROOM)) {
-					selfMessageResponse(Commands.IN_ROOM, currentLine);
-				}
-
+//				// server commands
+//				if (currentLine.equals(Commands.GIVE_USERNAME)) {
+//					write(name);
+//				}
+//				else if(currentLine.startsWith(Commands.FORCE_DISCONNECT)) {
+//					//selfMessage("You were kicked from server.");
+//					selfMessageResponse(Commands.FORCE_DISCONNECT, "kicked from server", currentLine);
+//					close();
+//					gui.dispose();
+//					break;
+//				}
+//
+//				// negative server responses
+//				else if (currentLine.startsWith(Commands.USERNAME_TAKEN)) {
+//					selfMessageResponse(Commands.USERNAME_TAKEN, "username already taken", currentLine);
+//					invalidName = true;
+//				} 
+//				else if (currentLine.startsWith(Commands.INVALID_USERNAME)) {
+//					selfMessageResponse(Commands.INVALID_USERNAME, "invalid username", currentLine);
+//					invalidName = true;
+//				} 
+//				else if (currentLine.startsWith(Commands.SERVER_FULL)) {
+//					selfMessageResponse(Commands.SERVER_FULL, "server already full", currentLine);
+//					close();
+//					gui.dispose();
+//					break;
+//				}
+//
+//				// positive server responses
+//				else if (currentLine.startsWith(Commands.LOGGED_IN)) {
+//					//loggedIn = true;
+//					selfMessageResponse(Commands.LOGGED_IN, "you are logged in now", currentLine);
+//				}
+//
+//				else if (currentLine.startsWith(Commands.VALID_USERNAME)) {
+//					selfMessageResponse(Commands.VALID_USERNAME,"username was valid", currentLine);
+//					invalidName = false;
+//				} 
+//				else if (currentLine.startsWith(Commands.IN_ROOM)) {
+//					selfMessageResponse(Commands.IN_ROOM, currentLine);
+//				}
+//
 				else {
 					selfMessage(currentLine);
 				}
-
-				if (invalidName) {
-					selfMessage("--> Enter new username.");
-				}
+//
+//				if (invalidName) {
+//					selfMessage("--> Enter new username.");
+//				}
 
 			}
 		} catch (IOException e) {
@@ -257,7 +282,7 @@ public final class ClientThread extends AbstractClientServerThread {
 			}
 		}
 			
-			
+		System.out.println("STRINGBUILDER: "+sb.toString());
 		return sb.toString();
 	}
 
@@ -276,5 +301,37 @@ public final class ClientThread extends AbstractClientServerThread {
 		
 	}
 
+	public void msgFromClient(String message) {
+
+		Date date = new Date();
+		long timecode = date.getTime();
+		
+		String[] splitMsg = message.split(" ");
+		
+		if(splitMsg.length>0){
+			System.out.println("MESSAGE FROM CLIENT: "+message);
+			switch(splitMsg[0]){
+				case Commands.USERS: write(timecode+" "+message);
+					break;
+				case "LIST" : write(timecode+" "+message);
+					break;
+				case "LEAVE" : write(timecode+" "+message);
+					break;
+				case "QUIT" : write(timecode+" "+message);
+					break;
+				case "GET" : write(timecode+" GET "+buildMessage(2,splitMsg));
+					break;
+				case "CREATE": write(timecode+" CREATE "+buildMessage(2, splitMsg));
+					break;
+				case "JOIN": write(timecode+" JOIN "+buildMessage(2, splitMsg));
+					break;
+				default: write(timecode + " SEND "+message);
+					break;
+			}
+		}
+	}
+	public String getUserName(){
+		return name;
+	}
 	
 }

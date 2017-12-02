@@ -20,7 +20,8 @@ abstract class AbstractWriteThread extends Thread{
 	 */
 	public void write(String message) {
 		
-		pw.write(message + "\n");
+//		pw.write(message + "\\r\\n"); //\n
+		pw.println(message);
 		pw.flush();
 		
 	}
