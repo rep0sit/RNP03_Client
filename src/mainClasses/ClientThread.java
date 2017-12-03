@@ -182,14 +182,14 @@ public final class ClientThread extends AbstractClientServerThread {
 //					}
 //					else 
 					if(lineAry[1].equals(Commands.SEND)) {
-						selfMessage(buildMessage(3, lineAry));
+						selfMessage("Server: "+buildMessage(3, lineAry));
 					}
 					else if(lineAry[1].equals(Commands.DELETE)) {
-						selfMessage("Der Raum " + buildMessage(3, lineAry) + " wurde geschlossen.");
+						selfMessage("Server: Der Raum " + buildMessage(3, lineAry) + " wurde geschlossen.");
 					}
 				}
 				else if(lineAry[0].equals(Commands.QUIT)) {
-					selfMessage(buildMessage(2, lineAry) +"(You were kicked from Server!)");
+					selfMessage("Server: "+buildMessage(2, lineAry) +"(You were kicked from Server!)");
 					close();
 					gui.dispose();
 					break;
@@ -198,17 +198,17 @@ public final class ClientThread extends AbstractClientServerThread {
 					if(lineAry[1].equals(Commands.LOGIN)) {
 						
 						if(lineAry[2].equals(Commands.SUCCESS)){
-							selfMessage(buildMessage(4, lineAry) + "(Login war erfolgreich.)");
+							selfMessage("Server: "+buildMessage(4, lineAry) + "(Login war erfolgreich.)");
 						}else {
-							selfMessage("(Login war nicht erfolgreich.)");
+							selfMessage("Server: (Login war nicht erfolgreich.)");
 						}
 					}
 					else if(lineAry[1].equals(Commands.USERS)) {
-						selfMessage("Hier sind die Users: "+currentLine);
+						selfMessage("Server: "+currentLine);
 					}else if(lineAry[1].equals(Commands.LIST)){
-						selfMessage("Liste der Raeume: "+currentLine);
+						selfMessage("Server: Liste der Raeume-> "+currentLine);
 					}else if(lineAry[1].equals(Commands.GET)){
-						selfMessage("Nachrichten: "+currentLine);
+						selfMessage("Server: "+currentLine);
 					}
 				}
 				
@@ -306,6 +306,7 @@ public final class ClientThread extends AbstractClientServerThread {
 		Date date = new Date();
 		long timecode = date.getTime();
 		
+		//Vom client ankommende, im Chat eingegebene Nachricht, gesplittet nach Leerzeichen
 		String[] splitMsg = message.split(" ");
 		
 		if(splitMsg.length>0){
@@ -313,17 +314,17 @@ public final class ClientThread extends AbstractClientServerThread {
 			switch(splitMsg[0]){
 				case Commands.USERS: write(timecode+" "+message);
 					break;
-				case "LIST" : write(timecode+" "+message);
+				case Commands.LIST : write(timecode+" "+message);
 					break;
-				case "LEAVE" : write(timecode+" "+message);
+				case Commands.LEAVE : write(timecode+" "+message);
 					break;
-				case "QUIT" : write(timecode+" "+message);
+				case Commands.QUIT : write(timecode+" "+message);
 					break;
-				case "GET" : write(timecode+" GET "+buildMessage(2,splitMsg));
+				case Commands.GET : write(timecode+" GET "+buildMessage(2,splitMsg));
 					break;
-				case "CREATE": write(timecode+" CREATE "+buildMessage(2, splitMsg));
+				case Commands.CREATE_ROOM: write(timecode+" CREATE "+buildMessage(2, splitMsg));
 					break;
-				case "JOIN": write(timecode+" JOIN "+buildMessage(2, splitMsg));
+				case Commands.JOIN: write(timecode+" JOIN "+buildMessage(2, splitMsg));
 					break;
 				default: write(timecode + " SEND "+message);
 					break;
