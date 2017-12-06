@@ -173,7 +173,7 @@ public final class ClientThread extends AbstractClientServerThread {
 				// server commands
 				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {
 
-					System.out.println("stringTimecode "+stringTimeCode);
+//					System.out.println("stringTimecode "+stringTimeCode);
 					
 //					if(lineAry[1].equals(Commands.GREETINGS)) {
 //						selfMessage(buildMessage(3, lineAry));
@@ -199,7 +199,7 @@ public final class ClientThread extends AbstractClientServerThread {
 						
 						if(lineAry[2].equals(Commands.SUCCESS)){
 							selfMessage("Server: "+buildMessage(4, lineAry) + "(Login war erfolgreich.)");
-						}else {
+						}else if(lineAry[2].equals(Commands.LOGIN_FAIL)){
 							selfMessage("Server: (Login war nicht erfolgreich.)");
 						}
 					}
@@ -209,6 +209,18 @@ public final class ClientThread extends AbstractClientServerThread {
 						selfMessage("Server: Liste der Raeume-> "+currentLine);
 					}else if(lineAry[1].equals(Commands.GET)){
 						selfMessage("Server: "+currentLine);
+					}else if((lineAry[1]+" "+lineAry[2]).equals(Commands.CREATE_SUCCESS)){
+						selfMessage("Server: "+currentLine);
+					}else if((lineAry[1]+" "+lineAry[2]).equals(Commands.CREATE_FAIL)){
+						selfMessage("Server: "+currentLine+" Es konnte kein neuer Chatraum erstellt werden.");
+					}else if((lineAry[1]+" "+lineAry[2]).equals(Commands.JOIN_SUCCESS)){
+						selfMessage("Server: "+currentLine+" Betreten des neuen Chatraums war erfolgreich.");
+					}else if((lineAry[1]+" "+lineAry[2]).equals(Commands.JOIN_FAIL)){
+						selfMessage("Server: "+currentLine+ " Der neue Chatraum konnte nicht betreten werden.");
+					}else if((lineAry[1]+" "+lineAry[2]).equals(Commands.LEAVE_SUCCESS)){
+						selfMessage("Server: "+currentLine+ " Chatraum konnte erfolgreich verlassen werden.");
+					}else if((lineAry[1]+" "+lineAry[2]).equals(Commands.LEAVE_FAIL)){
+						selfMessage("Server: "+currentLine+ " Der neue Chatraum konnte nicht verlassen werden.");
 					}
 				}
 				
@@ -281,8 +293,6 @@ public final class ClientThread extends AbstractClientServerThread {
 				sb.append(ary[i]).append(" ");
 			}
 		}
-			
-		System.out.println("STRINGBUILDER: "+sb.toString());
 		return sb.toString();
 	}
 
@@ -311,24 +321,37 @@ public final class ClientThread extends AbstractClientServerThread {
 		
 		if(splitMsg.length>0){
 			System.out.println("MESSAGE FROM CLIENT: "+message);
-			switch(splitMsg[0]){
-				case Commands.USERS: write(timecode+" "+message);
-					break;
-				case Commands.LIST : write(timecode+" "+message);
-					break;
-				case Commands.LEAVE : write(timecode+" "+message);
-					break;
-				case Commands.QUIT : write(timecode+" "+message);
-					break;
-				case Commands.GET : write(timecode+" GET "+buildMessage(2,splitMsg));
-					break;
-				case Commands.CREATE_ROOM: write(timecode+" CREATE "+buildMessage(2, splitMsg));
-					break;
-				case Commands.JOIN: write(timecode+" JOIN "+buildMessage(2, splitMsg));
-					break;
-				default: write(timecode + " SEND "+message);
-					break;
+			if(splitMsg[0].equals(Commands.USERS) || splitMsg[0].equals(Commands.LIST) 
+					|| splitMsg[0].equals(Commands.LEAVE) || splitMsg[0].equals(Commands.QUIT)){
+				write(timecode+" "+message);
+			}else if(splitMsg[0].equals(Commands.GET)){
+				write(timecode+" "+Commands.GET+" "+buildMessage(2,splitMsg));
+			}else if(splitMsg[0].equals(Commands.CREATE_ROOM)){
+				write(timecode+" "+Commands.CREATE_ROOM+" "+buildMessage(2, splitMsg));
+			}else if(splitMsg[0].equals(Commands.JOIN)){
+				write(timecode+" "+Commands.JOIN+" "+buildMessage(2, splitMsg));
+			}else{
+				write(timecode + " "+Commands.SEND+" "+message);
 			}
+			
+//			switch(splitMsg[0]){
+//				case Commands.USERS: write(timecode+" "+message);
+//					break;
+//				case Commands.LIST : write(timecode+" "+message);
+//					break;
+//				case Commands.LEAVE : write(timecode+" "+message);
+//					break;
+//				case Commands.QUIT : write(timecode+" "+message);
+//					break;
+//				case Commands.GET : write(timecode+" GET "+buildMessage(2,splitMsg));
+//					break;
+//				case Commands.CREATE_ROOM: write(timecode+" CREATE "+buildMessage(2, splitMsg));
+//					break;
+//				case Commands.JOIN: write(timecode+" JOIN "+buildMessage(2, splitMsg));
+//					break;
+//				default: write(timecode + " SEND "+message);
+//					break;
+//			}
 		}
 	}
 	public String getUserName(){

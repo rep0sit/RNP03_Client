@@ -51,8 +51,8 @@ public final class Commands {
 	//Client-Login war nciht erfolgreich: <timecode> LOGIN FAIL
 	public static final String LOGIN_FAIL = "LOGIN FAIL";
 	public static final String CREATE_FAIL = "CREATE FAIL";
-	public static final String JOIN_FAIL = "JOIN_FAIL";
-	public static final String LEAVE_FAIL = "LEAVE_FAIL";
+	public static final String JOIN_FAIL = "JOIN FAIL";
+	public static final String LEAVE_FAIL = "LEAVE FAIL";
 	
 	//######FROM CLIENT USER TO SERVER (START WITH "/")######
 	//Client logt sich mit Benutzernamen ein: <timecode> LOGIN <username>
