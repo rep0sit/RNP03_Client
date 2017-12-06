@@ -58,9 +58,9 @@ public final class ClientThread extends AbstractClientServerThread {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			pw = new PrintWriter(socket.getOutputStream());
 			
-			Date date = new Date();
-			long timecode = date.getTime();
-			write(timecode+" LOGIN "+name);
+//			Date date = new Date();
+//			long timecode = date.getTime();
+//			write(timecode+" LOGIN "+name);
 		} 
 		catch (SocketTimeoutException e) {
 
@@ -175,11 +175,11 @@ public final class ClientThread extends AbstractClientServerThread {
 
 //					System.out.println("stringTimecode "+stringTimeCode);
 					
-//					if(lineAry[1].equals(Commands.GREETINGS)) {
-//						selfMessage(buildMessage(3, lineAry));
-//						write(timecode + Commands.LOGIN + name);
-//						currentTimeCode = stringTimeCode;
-//					}
+					if(lineAry[1].equals(Commands.GREETINGS)) {
+						selfMessage(buildMessage(3, lineAry));
+						write(timecode + Commands.LOGIN + name);
+						currentTimeCode = stringTimeCode;
+					}
 //					else 
 					if(lineAry[1].equals(Commands.SEND)) {
 						selfMessage("Server: "+buildMessage(3, lineAry));
@@ -199,7 +199,7 @@ public final class ClientThread extends AbstractClientServerThread {
 						
 						if(lineAry[2].equals(Commands.SUCCESS)){
 							selfMessage("Server: "+buildMessage(4, lineAry) + "(Login war erfolgreich.)");
-						}else if(lineAry[2].equals(Commands.LOGIN_FAIL)){
+						}else if(lineAry[2].equals(Commands.FAIL)){
 							selfMessage("Server: (Login war nicht erfolgreich.)");
 						}
 					}

@@ -53,6 +53,7 @@ public final class Commands {
 	public static final String CREATE_FAIL = "CREATE FAIL";
 	public static final String JOIN_FAIL = "JOIN FAIL";
 	public static final String LEAVE_FAIL = "LEAVE FAIL";
+	public static final String FAIL = "FAIL";
 	
 	//######FROM CLIENT USER TO SERVER (START WITH "/")######
 	//Client logt sich mit Benutzernamen ein: <timecode> LOGIN <username>
