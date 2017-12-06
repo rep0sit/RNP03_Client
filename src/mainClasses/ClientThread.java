@@ -58,9 +58,9 @@ public final class ClientThread extends AbstractClientServerThread {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			pw = new PrintWriter(socket.getOutputStream());
 			
-//			Date date = new Date();
-//			long timecode = date.getTime();
-//			write(timecode+" LOGIN "+name);
+			Date date = new Date();
+			long timecode = date.getTime();
+			write(timecode+" LOGIN "+name);
 		} 
 		catch (SocketTimeoutException e) {
 
@@ -172,14 +172,12 @@ public final class ClientThread extends AbstractClientServerThread {
 				
 				// server commands
 				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {
-
-//					System.out.println("stringTimecode "+stringTimeCode);
 					
-					if(lineAry[1].equals(Commands.GREETINGS)) {
-						selfMessage(buildMessage(3, lineAry));
-						write(timecode + Commands.LOGIN + name);
-						currentTimeCode = stringTimeCode;
-					}
+//					if(lineAry[1].equals(Commands.GREETINGS)) {
+//						selfMessage(buildMessage(3, lineAry));
+//						write(timecode + Commands.LOGIN + name);
+//						currentTimeCode = stringTimeCode;
+//					}
 //					else 
 					if(lineAry[1].equals(Commands.SEND)) {
 						selfMessage("Server: "+buildMessage(3, lineAry));
