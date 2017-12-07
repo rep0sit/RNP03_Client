@@ -171,14 +171,13 @@ public final class ClientThread extends AbstractClientServerThread {
 				int lineAryLen = lineAry.length;
 				
 				// server commands
-				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {
-					
-//					if(lineAry[1].equals(Commands.GREETINGS)) {
-//						selfMessage(buildMessage(3, lineAry));
-//						write(timecode + Commands.LOGIN + name);
-//						currentTimeCode = stringTimeCode;
-//					}
-//					else 
+				if(lineAry[0].equals(Commands.SERVER_PREFIX)) {					
+					if(lineAry[1].equals(Commands.GREETINGS)) {
+						selfMessage(buildMessage(3, lineAry));
+						write(timecode+" " + Commands.LOGIN + " "+name);
+						currentTimeCode = stringTimeCode;
+					}
+					else 
 					if(lineAry[1].equals(Commands.SEND)) {
 						selfMessage("Server: "+buildMessage(3, lineAry));
 					}
